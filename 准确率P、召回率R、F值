@@ -1,0 +1,14 @@
+import pandas
+line=[]
+file=open(r'output.txt','r',encoding='gbk')
+for i in file.readlines():
+    i=i[0:-1]
+    if len(i)!=0 and len(i)!=1:
+        line.append(i.split('\t'))
+df=pandas.DataFrame(line,columns=['character','train','test'])
+correct=df[df.train==df.test]
+for i in ('B','E','BE'):
+    R=sum(correct.test==i)/sum(df.train==i)
+    P=sum(correct.test==i)/sum(df.test==i)
+    F=R*P*2/(R+P)
+    print(i,':\n','R=',R,' P=',P,' F=',F)
